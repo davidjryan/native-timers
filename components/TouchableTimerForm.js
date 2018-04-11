@@ -11,3 +11,12 @@ export default function TogglableTimerForm({ isOpen }) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 10,
+  },
+  buttonPadding: {
+    paddingHorizontal: 15,
+  },
+})
