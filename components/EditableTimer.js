@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TimerFrom from './TimerForm';
+import TimerForm from './TimerForm';
 import Timer from './Timer';
 
 export default function EditableTimer({
@@ -9,7 +9,7 @@ export default function EditableTimer({
   project,
   elapsed,
   isRunning,
-  editFromOpen,
+  editFormOpen,
 }) {
   if (editFormOpen) {
     return (
