@@ -22,6 +22,13 @@ export default function EditableTimer({
       />
     )  
   };
-
-  
+  return (
+    <Timer
+      id={id}
+      title={title}
+      project={project}
+      elapsed={elapsed}
+      isRunning={isRunning}
+    />
+  )
 }
