@@ -34,10 +34,21 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  appContainer: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
+  titleContainer: {
+    paddingTop: 35,
+    paddingBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#D6D7DA',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  timerList: {
+    paddingBottom: 15,
+  }
 });
