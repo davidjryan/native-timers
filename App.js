@@ -7,10 +7,27 @@ import TogglableTimerForm from './components/TogglableTimerForm';
 export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+      <View style={styles.appContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Timers</Text>
+        </View>
+        <ScrollView style={styles.timerList}>
+          <TogglableTimerForm isOpen={false} />
+          <EditableTimer
+            id="1"
+            title="Mow the lawn"
+            project="House Chores"
+            elapsed="8986300"
+            isRunning
+          />
+          <EditableTimer
+            id="2"
+            title="Bake Squash"
+            project="Kitchen Chores"
+            elapsed="3890985"
+            editFormOpen
+          />
+        </ScrollView>
       </View>
     );
   }
