@@ -1,5 +1,5 @@
 import React from 'react';
-import { StylesSheet, View, Text, TextInput } from 'react-native';
+import { StyleSheet, View, Text, TextInput } from 'react-native';
 
 import TimerButton from './TimerButton';
 
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#D6D7DA',
     borderWidth: 2,
-    birderRadius: 10,
+    borderRadius: 10,
     padding: 15,
     margin: 15,
     marginBottom: 0,
