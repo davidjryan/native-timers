@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import TimerForm from './TimerForm';
 import Timer from './Timer';
