@@ -15,10 +15,17 @@ export default class TogglableTimerForm extends Component {
 
   render() {
     const { isOpen } = this.state;
-    
+
     return (
       <View style={[styles.container, !isOpen && styles.buttonPadding]}>
-        {isOpen ? <TimerForm /> : <TimerButton title="+" color="black" onPress={this.handleFormOpen} />}
+        {isOpen ? (
+          <TimerForm 
+            onFormSubmit={this.handleFormSubmit}
+            onFormClose={this.handleFormClose}
+          />
+        ) : (
+          <TimerButton title="+" color="black" onPress={this.handleFormOpen} />
+        )}
       </View>
     )
   }
