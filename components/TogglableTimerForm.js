@@ -9,8 +9,15 @@ export default class TogglableTimerForm extends Component {
     isOpen: false,
   };
 
-  handleFormOpen = () => {
-    this.setState({ isOpen: true });
+  handleFormClose = () => {
+    this.setState({ isOpen: false });
+  }
+
+  handleFormSubmit = timer => {
+    const { onFormSubmit } = this.props;
+
+    onFormSubmit(timer);
+    this.setState({ isOpen: false });
   }
 
   render() {
