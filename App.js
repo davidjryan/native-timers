@@ -34,8 +34,24 @@ export default class App extends Component {
     })
   }
 
-  handleFormSubmit = () => {
-    
+  handleFormSubmit = attrs => {
+    const { timers } = this.state;
+
+    this.setState({
+      timers: timers.map(timer => {
+        if (timer.id === attrs.id) {
+          const { title, project } = attrs;
+
+          return {
+            ...timer,
+            title,
+            project,
+          };
+        }
+
+        return timer;
+      })
+    })
   }
 
   render() {
