@@ -74,6 +74,7 @@ export default class App extends Component {
               project={project}
               elapsed={elapsed}
               isRunning={isRunning}
+              onFormSubmit={this.handleFormSubmit}
             />
           ))}
         </ScrollView>
