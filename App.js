@@ -1,33 +1,143 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, ScrollView, View } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, KeyboardAvoidingView } from 'react-native';
+import uuidv4 from 'uuid/v4';
 
 import EditableTimer from './components/EditableTimer';
 import TogglableTimerForm from './components/TogglableTimerForm';
+import { newTimer } from './utils/TimerUtils';
 
 export default class App extends Component {
+  state = {
+    timers: [
+      {
+        title: 'Mow the lawn',
+        project: 'House Chores',
+        id: uuidv4(),
+        elapsed: 5456099,
+        isRunning: true,
+      },
+      {
+        title: 'Bake squash',
+        project: 'Kitchen Chores',
+        id: uuidv4(),
+        elapsed: 1273998,
+        isRunning: false,
+      }
+    ]
+  }
+
+  handleCreateFormSubmit = timer => {
+    const { timers } = this.state;
+
+    this.setState({
+      timers: [newTimer(timer), ...timers],
+    })
+  }
+
+  handleFormSubmit = attrs => {
+    const { timers } = this.state;
+
+    this.setState({
+      timers: timers.map(timer => {
+        if (timer.id === attrs.id) {
+          const { title, project } = attrs;
+
+          return {
+            ...timer,
+            title,
+            project,
+          };
+        }
+
+        return timer;
+      })
+    })
+  }
+
+  handleRemovePress = id => {
+    const { timers } = this.state;
+
+    this.setState({
+      timers: timers.filter(timer => timer.id != id)
+    })
+  }
+
+  toggleTimer = timerId => {
+    this.setState(prevState => {
+      const { timers } = prevState;
+
+      return {
+        timers: timers.map(timer => {
+          const { id, isRunning } = timer;
+
+          if (id ===timerId) {
+            return {
+              ...timer,
+              isRunning: !isRunning,
+            };
+          }
+
+          return timer;
+        }),
+      }
+    })
+  }
+
+  componentDidMount() {
+    const TIME_INTERVAL = 1000;
+
+    this.intervalId = setInterval(() => {
+      const { timers } = this.state;
+      
+      this.setState({
+        timers: timers.map(timer => {
+          const { elapsed, isRunning } = timer;
+
+          return {
+            ...timer,
+            elapsed: isRunning ? elapsed + TIME_INTERVAL : elapsed,
+          };
+        }),
+      });
+    })
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+  }
+
   render() {
+    const { timers } = this.state;
+
     return (
       <View style={styles.appContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Timers</Text>
         </View>
-        <ScrollView style={styles.timerList}>
-          <TogglableTimerForm isOpen={false} />
-          <EditableTimer
-            id="1"
-            title="Mow the lawn"
-            project="House Chores"
-            elapsed="8986300"
-            isRunning
-          />
-          <EditableTimer
-            id="2"
-            title="Bake Squash"
-            project="Kitchen Chores"
-            elapsed="3890985"
-            editFormOpen
-          />
-        </ScrollView>
+        <KeyboardAvoidingView
+          behavior="padding"
+          style={styles.timerListContainer}
+        >
+          <ScrollView style={styles.timerList}>
+            <TogglableTimerForm
+              onFormSubmit={this.handleCreateFormSubmit}
+            />
+            {timers.map(({ title, project, id, elapsed, isRunning }) => (
+              <EditableTimer
+                key={id}
+                id={id}
+                title={title}
+                project={project}
+                elapsed={elapsed}
+                isRunning={isRunning}
+                onFormSubmit={this.handleFormSubmit}
+                onRemovePress={this.handleRemovePress}
+                onStartPress={this.toggleTimer}
+                onStopPress={this.toggleTimer}
+              />
+            ))}
+          </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     );
   }
@@ -47,6 +157,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  timerListContainer: {
+    flex: 1,
   },
   timerList: {
     paddingBottom: 15,
